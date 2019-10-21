@@ -35,7 +35,7 @@ MongoClient.connect(process.env.URI_TEST, options)
 
     })
     .then(() => {
-        console.log(`MongoDB connected a ${process.env.MFLIX_DB_URI}`)
+        console.log(`MongoDB connected a ${process.env.URI_TEST}`)
         module.exports = collections
     })
 
