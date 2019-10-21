@@ -17,35 +17,32 @@
  *                                                          - error: El documento debe pasar la validacion en orden que esta siendo escrito.
  *                                                          - warn: El documento que no pase la validacion será guardado pero con un mensage de alerta.
  */
+let address = {name: 'Calle marmoles', address: null}
 
 module.exports = {
-    collMod: 'user',
+    collMod: 'address',
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ["name", "year", "major", "address"],
+            required: ["name", "address"],
             properties: {
                 name: {
                     bsonType: "string",
                     description: "must be a string and is required"
                 },
-                year: {
-                    bsonType: "int",
-                    minimum: 2017,
-                    maximum: 3017,
-                    description: "must be an integer in [ 2017, 3017 ] and is required"
-                },
-                major: {
-                    enum: ["Math", "English", "Computer Science", "History", null],
-                    description: "can only be one of the enum values and is required"
-                },
-                gpa: {
-                    bsonType: ["double"],
-                    description: "must be a double if the field exists"
-                },
                 address: {
-                    bsonType: "objectId",
-                    description: "must be a objectId and is required"
+                    bsonType: "object",
+                    required: ["city"],
+                    properties: {
+                        street: {
+                            bsonType: "string",
+                            description: "must be a string if the field exists"
+                        },
+                        city: {
+                            bsonType: "string",
+                            "description": "must be a string and is required"
+                        }
+                    }
                 }
             }
         }
@@ -53,5 +50,4 @@ module.exports = {
     validationLevel: "moderate",
     validationAction: "warn"
 }
-
 

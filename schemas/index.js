@@ -1,4 +1,5 @@
 const userSchema = require('./user.schema')
+const addressSchema = require('./address.schema')
 
 let connection
 
@@ -14,7 +15,9 @@ module.exports = class Schemas {
             if (!connection)
                 connection = conn
 
-            await connection.db(process.env.MFLIX_NS).runCommand(userSchema)
+            await connection.db(process.env.DB_TEST).runCommand(userSchema)
+            await connection.db(process.env.DB_TEST).runCommand(addressSchema)
+
         } catch (e) {
             console.error(`Unable to establish connection with Schemas: ${e}`)
         }
