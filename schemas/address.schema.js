@@ -17,7 +17,6 @@
  *                                                          - error: El documento debe pasar la validacion en orden que esta siendo escrito.
  *                                                          - warn: El documento que no pase la validacion será guardado pero con un mensage de alerta.
  */
-let address = {name: 'Calle marmoles', address: null}
 
 module.exports = {
     collMod: 'address',
