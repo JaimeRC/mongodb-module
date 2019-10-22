@@ -4,7 +4,7 @@ const {expect} = require('chai')
 
 describe('User Test', () => {
 
-    before(async () => await User.injectDB(global.nixi1Client))
+    before(async () => await User.injectDB(global.testClient))
 
     let result
     let user = {

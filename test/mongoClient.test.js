@@ -71,11 +71,11 @@ describe("MongoClient testing", async () => {
                 }
             )
             // create a database object for the "mflix" database
-            const nixi1DB = testClient.db("test")
+            const testDB = testClient.db("test")
 
             // make sure the "mflix" database has the correct collections
-            const nixi1Collections = await nixi1DB.listCollections().toArray()
-            const actualCollectionNames = nixi1Collections.map(obj => obj.name)
+            const testCollections = await testDB.listCollections().toArray()
+            const actualCollectionNames = testCollections.map(obj => obj.name)
             const expectedCollectionNames = ["addresses", "users"]
             expectedCollectionNames.map(collection => expect(actualCollectionNames).to.contains(collection))
         } catch (e) {

@@ -4,7 +4,7 @@ const {expect} = require('chai')
 
 describe('Address Test', () => {
 
-    before(async () => await Address.injectDB(global.nixi1Client))
+    before(async () => await Address.injectDB(global.testClient))
 
     let address = {name: 'Calle marmoles', address: null}
     let result

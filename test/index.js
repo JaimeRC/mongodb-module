@@ -3,19 +3,19 @@ const {MongoClient} = require('mongodb')
 describe('Testing nx-mongodb', () => {
 
     before(async () => {
-        global.nixi1Client = await MongoClient.connect(
+        global.testClient = await MongoClient.connect(
             process.env.URI_TEST,
             {
-                replicaSet: '',                              //nombre del replica set
-                maxPoolSize: 100,                            //numero de conexiones para el pool creado
-                w: 1,                                        //confirmación de inserción en un solo nodo
-                wtimeout: 2000,                              //tiempo máximo para la insercion
-                readPreference: 'primaryPreferred',          //preferencia del nodo de lectura
-                autoReconnect: true,                         //reconectarse a la BD
-                reconnectTries: 30,                          //Intentos de reconeccion
-                reconnectInterval: 1000,                     //Intervalo de reconeccion
+                replicaSet: '',                              // Nombre del replica set
+                maxPoolSize: 100,                            // Numero de conexiones para el pool creado
+                w: 1,                                        // Confirmación de inserción en un solo nodo
+                wtimeout: 2000,                              // Tiempo máximo para la insercion
+                readPreference: 'primaryPreferred',          // Preferencia del nodo de lectura
+                autoReconnect: true,                         // Reconectarse a la BD
+                reconnectTries: 30,                          // Intentos de reconeccion
+                reconnectInterval: 1000,                     // Intervalo de reconeccion
                 connectTimeoutMS: 200,
-                retryWrites: true,                           // reintento de escritura (solo uno)
+                retryWrites: true,                           // Reintento de escritura (solo uno)
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             }
@@ -23,9 +23,9 @@ describe('Testing nx-mongodb', () => {
     })
 
     after(async () => {
-        await global.nixi1Client.db(process.env.DB_TEST).dropDatabase()
-        await global.nixi1Client.close()
-        delete global.nixi1Client
+        await global.testClient.db(process.env.DB_TEST).dropDatabase()
+        await global.testClient.close()
+        delete global.testClient
     })
 
 

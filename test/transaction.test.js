@@ -5,9 +5,9 @@ const {expect} = require('chai')
 describe('Transactions Test', () => {
 
     before(async () => {
-        await Transactions.injectDB(global.nixi1Client)
-        await User.injectDB(global.nixi1Client)
-        await Address.injectDB(global.nixi1Client)
+        await Transactions.injectDB(global.testClient)
+        await User.injectDB(global.testClient)
+        await Address.injectDB(global.testClient)
     })
 
     let result
