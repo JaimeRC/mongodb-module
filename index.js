@@ -5,7 +5,7 @@ const schemas = require('./schemas')
 
 const options = {
     replicaSet: '',                              //nombre del replica set
-    maxPoolSize: 100,                            //numero de conexiones para el pool creado
+    //maxPoolSize: 100,                            //numero de conexiones para el pool creado
     w: 1,                                        //confirmación de inserción en un solo nodo
     wtimeout: 2000,                              //tiempo máximo para la insercion
     readPreference: 'primaryPreferred',          //preferencia del nodo de lectura

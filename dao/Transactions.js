@@ -1,15 +1,17 @@
-const {User, Address} = require('./')
+//const {User, Address} = require('./')
 
-let session
+let session, users, addresses
+
 module.exports = class Transactions {
     static async injectDB(conn) {
-        if (session) {
+        if (session)
             return
-        }
+
         try {
-            await User.injectDB(conn)
-            await Address.injectDB(conn)
             session = await conn.startSession()
+            users = await conn.db(process.env.DB_TEST).collection("users")
+            addresses = await conn.db(process.env.DB_TEST).collection("addresses")
+
         } catch (e) {
             console.error(`Unable to establish connection in Transactions: ${e}`)
         }
@@ -20,17 +22,11 @@ module.exports = class Transactions {
         try {
             session.startTransaction()
 
-            const opts = {session}
+            const newAddress = await addresses.insertOne(address, {session})
 
-            const newUser = await User.insertOne(user, opts)
+            user.address = newAddress._id
 
-            console.log('User', newUser)
-
-            address.user = newUser._id
-
-            const newAddress = await Address.insertOne(address, opt)
-
-            console.log(newAddress)
+            const newUser = await users.insertOne(user, {session})
 
             await session.commitTransaction();
 

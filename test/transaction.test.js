@@ -22,8 +22,8 @@ describe('Transactions Test', () => {
 
     it('createUserWithAddress', async () => {
         let result = await Transactions.createUserWithAddress(user, address)
-        console.log(result)
-        // expect(result).not.to.equal(null)
+
+         expect(result).not.to.equal(null)
     })
 
 })

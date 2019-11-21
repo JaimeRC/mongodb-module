@@ -11,8 +11,8 @@ describe("MongoClient testing", async () => {
             testClient = await MongoClient.connect(
                 process.env.URI_TEST,
                 {
-                    replicaSet: '',                              //nombre del replica set
-                    maxPoolSize: 100,                            //numero de conexiones para el pool creado
+                    replicaSet: 'rs',                              //nombre del replica set
+                    //maxPoolSize: 100,                            //numero de conexiones para el pool creado
                     w: 1,                                        //confirmación de inserción en un solo nodo
                     wtimeout: 2000,                              //tiempo máximo para la insercion
                     readPreference: 'primaryPreferred',          //preferencia del nodo de lectura
@@ -56,8 +56,8 @@ describe("MongoClient testing", async () => {
             testClient = await MongoClient.connect(
                 process.env.URI_TEST,
                 {
-                    replicaSet: '',                              //nombre del replica set
-                    maxPoolSize: 100,                            //numero de conexiones para el pool creado
+                    replicaSet: 'rs',                              //nombre del replica set
+                    //maxPoolSize: 100,                            //numero de conexiones para el pool creado
                     w: 1,                                        //confirmación de inserción en un solo nodo
                     wtimeout: 2000,                              //tiempo máximo para la insercion
                     readPreference: 'primaryPreferred',          //preferencia del nodo de lectura

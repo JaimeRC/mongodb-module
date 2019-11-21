@@ -23,7 +23,7 @@ module.exports = {
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ["name", "address"],
+            required: ["name", "address", "location"],
             properties: {
                 name: {
                     bsonType: "string",
@@ -42,11 +42,29 @@ module.exports = {
                             "description": "must be a string and is required"
                         }
                     }
+                },
+                location: {
+                    bsonType: "object",
+                    required: ["type", "coordinates"],
+                    properties: {
+                        type: {
+                            bsonType: "string",
+                            enum: ["Point", "LineString", "Polygon", "MultiPoint", "MultiLineString", "MultiPolygon", "GeometryCollection"],
+                            description: "must be a string that specifies the GeoJSON object type"
+                        },
+                        coordinates: {
+                            bsonType: "array",
+                            description: "must be an array with two double values, first longitude and second latitude"
+                        }
+
+                    }
                 }
             }
         }
     },
-    validationLevel: "moderate",
-    validationAction: "warn"
+    validationLevel:
+        "moderate",
+    validationAction:
+        "warn"
 }
 

@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "DB_TEST=test URI_TEST=mongodb://localhost:27017 mocha ./test/index.js --timeout 15000 --exit"
+    "test": "DB_TEST=test URI_TEST=mongodb://localhost:27017,localhost:27018,localhost:27019 mocha ./test/index.js --timeout 15000 --exit"
   },
   "author": "Jaime Rubio",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^3.3.2"
+    "mongodb": "^3.3.2",
+    "run-rs": "^0.6.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",

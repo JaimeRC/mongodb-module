@@ -1,19 +1,20 @@
 const createIndexes = require('./utils/createIndexes')
 
-const indexes = []
+const indexes = [[{name: 1}]]
 
 let users
 
+
 module.exports = class User {
     static async injectDB(conn) {
-        if (users) {
+        if (users)
             return
-        }
+
         try {
 
             users = await conn.db(process.env.DB_TEST).collection("users")
 
-            //createIndexes(passengers, indexes)
+            createIndexes(users, indexes, {})
         } catch (e) {
             console.error(`Unable to establish connection in passenger collection: ${e}`)
         }
@@ -34,4 +35,5 @@ module.exports = class User {
     static async deleteOne(query) {
         return await users.deleteOne(query)
     }
+
 }

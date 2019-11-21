@@ -6,8 +6,8 @@ describe('Testing nx-mongodb', () => {
         global.testClient = await MongoClient.connect(
             process.env.URI_TEST,
             {
-                replicaSet: '',                              // Nombre del replica set
-                maxPoolSize: 100,                            // Numero de conexiones para el pool creado
+                replicaSet: 'rs',                              // Nombre del replica set
+                //maxPoolSize: 100,                            // Numero de conexiones para el pool creado
                 w: 1,                                        // Confirmación de inserción en un solo nodo
                 wtimeout: 2000,                              // Tiempo máximo para la insercion
                 readPreference: 'primaryPreferred',          // Preferencia del nodo de lectura
@@ -15,7 +15,7 @@ describe('Testing nx-mongodb', () => {
                 reconnectTries: 30,                          // Intentos de reconeccion
                 reconnectInterval: 1000,                     // Intervalo de reconeccion
                 connectTimeoutMS: 200,
-                retryWrites: true,                           // Reintento de escritura (solo uno)
+                //retryWrites: true,                           // Reintento de escritura (solo uno)
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             }
@@ -36,7 +36,6 @@ describe('Testing nx-mongodb', () => {
     require('./mongoClient.test')
 
     require('./transaction.test')
-
 
 
 })

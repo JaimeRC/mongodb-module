@@ -1,18 +1,18 @@
 const createIndexes = require('./utils/createIndexes')
 
-const indexes = []
+const indexes = [[{location: '2dsphere'}]]
 
 let addresses
 
 module.exports = class Address {
     static async injectDB(conn) {
-        if (addresses) {
+        if (addresses)
             return
-        }
+
         try {
             addresses = await conn.db(process.env.DB_TEST).collection("addresses")
 
-            //createIndexes(passengers, indexes)
+            createIndexes(addresses, indexes, {})
         } catch (e) {
             console.error(`Unable to establish connection in passenger collection: ${e}`)
         }
@@ -33,4 +33,5 @@ module.exports = class Address {
     static async deleteOne(query) {
         return await addresses.deleteOne(query)
     }
+
 }
