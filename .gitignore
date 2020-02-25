@@ -175,3 +175,7 @@ typings/
 package-lock.json
 .idea
 *.iml
+
+node1/
+node2/
+node3/
