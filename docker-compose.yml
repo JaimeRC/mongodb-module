@@ -1,0 +1,98 @@
+version: "3.7"
+
+services:
+
+  ### API WITH MONGODB DRIVER
+  api:
+    hostname: api
+    container_name: api
+    build:
+      context: ./
+      dockerfile: api/Dockerfile
+    networks:
+      - mongo_network
+    ports:
+      - 8080:8080
+    volumes:
+      - ./api/:/src
+    restart: always
+    env_file:
+      - mongo/.env
+    environment:
+      MONGO_URI: "mongodb://mongo1:27010,mongo2:27011,mongo3:27012"
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+      - mongoclient
+
+  ### REPLICA SER MONGODB
+  mongo1:
+    hostname: mongo1
+    container_name: mongo1
+    image: mongo:latest
+    networks:
+      - mongo_network
+    ports:
+      - 27010:27010
+    volumes:
+      - ./mongo/data/node1:/data/db/node1
+      - ./mongo/config/node1.conf:/etc/node1.conf
+    restart: always
+    entrypoint: [ "mongod", "--config","/etc/node1.conf" ]
+    env_file:
+      - mongo/.env
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+  mongo2:
+    hostname: mongo2
+    container_name: mongo2
+    image: mongo:latest
+    networks:
+      - mongo_network
+    ports:
+      - 27011:27011
+    volumes:
+      - ./mongo/data/node2:/data/db/node2
+      - ./mongo/config/node2.conf:/etc/node2.conf
+    restart: always
+    entrypoint: [ "mongod", "--config","/etc/node2.conf" ]
+    env_file:
+      - mongo/.env
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+  mongo3:
+    hostname: mongo3
+    container_name: mongo3
+    image: mongo:latest
+    networks:
+      - mongo_network
+    ports:
+      - 27012:27012
+    volumes:
+      - ./mongo/data/node3:/data/db/node3
+      - ./mongo/config/node3.conf:/etc/node3.conf
+    restart: always
+    entrypoint: [ "mongod", "--config","/etc/node3.conf" ]
+    env_file:
+      - mongo/.env
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+  mongoclient:
+    hostname: mongoclient
+    container_name: mongoclient
+    image: mongo:latest
+    networks:
+      - mongo_network
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    volumes:
+      - ./mongo/deploy:/src
+    entrypoint: ["bash","./src/setup.sh"]
+
+networks:
+  mongo_network:
+    name: mongo_network
+    driver: bridge
