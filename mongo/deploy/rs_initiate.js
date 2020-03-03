@@ -3,7 +3,7 @@ print("*****************       Creating replica set      ******************");
 print("********************************************************************");
 
 var rs_cluster = {
-    _id: 'rs0',
+    _id: "rs_name",
     members: [
         {_id: 0, host: 'mongo1:27010'},
         {_id: 1, host: 'mongo2:27011'},

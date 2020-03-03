@@ -1,12 +1,22 @@
 {
-  "name": "nx-mongodb",
-  "version": "1.0.0",
-  "description": "",
+  "name": "mongodb-module",
+  "version": "1.2.0",
+  "description": "MongoDB Module with ReplicaSet",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JaimeRC/mongodb-module"
+  },
+  "keywords": [
+    "dashboard"
+  ],
+  "author": {
+    "name": "Jaime Rubio",
+    "url": "https://github.com/JaimeRC"
+  },
   "scripts": {
     "test": "mocha ./test/index.js --timeout 15000 --exit"
   },
-  "author": "Jaime Rubio",
   "license": "ISC",
   "dependencies": {
     "mongodb": "^3.3.2"

@@ -18,15 +18,13 @@ services:
     restart: always
     env_file:
       - mongo/.env
-    environment:
-      MONGO_URI: "mongodb://mongo1:27010,mongo2:27011,mongo3:27012"
     depends_on:
       - mongo1
       - mongo2
       - mongo3
       - mongoclient
 
-  ### REPLICA SER MONGODB
+  ### REPLICA SET MONGODB
   mongo1:
     hostname: mongo1
     container_name: mongo1
@@ -78,6 +76,8 @@ services:
       - mongo/.env
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+
+  # Cluster de Mongo para configurar el ReplicaSet
   mongoclient:
     hostname: mongoclient
     container_name: mongoclient
