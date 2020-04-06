@@ -118,3 +118,24 @@ para ejecutar el archivo de javascript de configuración:
 Después de que se ejecute este proceso, ya tendremos inicializado y configurado el RS.
 
 Para conectarnos a este RS con el driver de MongoDB tendríamos que utilizar la siguiente uri: `mongodb://mongo1:27010,mongo2:27011,mongo3:27012`
+
+
+## Prerequisitos
+
+- [Docker](https://docs.docker.com/install/) 
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+## Empezando
+
+1. Clona el repositorio.
+2. Ejecuta el comando `docker-compose up`.
+
+        Creating network "mongo_network" with driver "bridge"
+        Pulling mongo1 (mongo:latest)...
+        latest: Pulling from library/mongo
+        5bed26d33875: Downloading [=======>                                           ]  4.135MB/26.69MB
+        ...
+        1d3609ce2ac9: Waiting
+
+    
+
