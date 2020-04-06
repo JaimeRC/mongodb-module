@@ -17,7 +17,7 @@ module.exports = class User {
 
             createIndexes(users, indexes, {})
         } catch (e) {
-            console.error(`Unable to establish connection in passenger collection: ${e}`)
+            console.error(`Unable to establish connection in users collection: ${e}`)
         }
     }
 
