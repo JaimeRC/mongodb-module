@@ -15,7 +15,6 @@ services:
       - 8080:8080
     volumes:
       - ./api/:/src
-    restart: always
     env_file:
       - mongo/.env
     depends_on:
@@ -40,8 +39,6 @@ services:
     entrypoint: [ "mongod", "--config","/etc/node1.conf" ]
     env_file:
       - mongo/.env
-    environment:
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
   mongo2:
     hostname: mongo2
     container_name: mongo2
@@ -57,8 +54,6 @@ services:
     entrypoint: [ "mongod", "--config","/etc/node2.conf" ]
     env_file:
       - mongo/.env
-    environment:
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
   mongo3:
     hostname: mongo3
     container_name: mongo3
@@ -74,8 +69,6 @@ services:
     entrypoint: [ "mongod", "--config","/etc/node3.conf" ]
     env_file:
       - mongo/.env
-    environment:
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
 
   # Cluster de Mongo para configurar el ReplicaSet
   mongoclient:
