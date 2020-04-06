@@ -4,6 +4,7 @@ const {env: {MONGO_DATABASE}} = process
 const indexes = [[{expireAt: 0}]]
 
 let trigger
+
 module.exports = class Trigger {
     static async injectDB(conn) {
         if (trigger)
