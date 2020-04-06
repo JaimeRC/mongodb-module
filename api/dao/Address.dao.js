@@ -15,7 +15,7 @@ module.exports = class Address {
 
             createIndexes(addresses, indexes, {})
         } catch (e) {
-            console.error(`Unable to establish connection in passenger collection: ${e}`)
+            console.error(`Unable to establish connection in addresses collection: ${e}`)
         }
     }
 

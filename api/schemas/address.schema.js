@@ -19,7 +19,7 @@
  */
 
 module.exports = {
-    collMod: 'address',
+    collMod: 'addresses',
     validator: {
         $jsonSchema: {
             bsonType: "object",
