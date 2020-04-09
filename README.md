@@ -8,7 +8,7 @@ Ademas, para la utilización de este mismo se ha desarrollado con Docker la crea
 ## Estructura del Proyecto
     
     docker-compose.yml
-        ├─── api
+        ├─── module
         |     ├───index.js                # Archivo de inicialización y conexión a la DB
         |     ├───test                    # Archivos de Test
         |     ├───schemas                 # Esquemas de validación de los campos de cada colección
@@ -26,7 +26,8 @@ Ademas, para la utilización de este mismo se ha desarrollado con Docker la crea
                     └───setup.sh          # Comprueba que los Cluster de mongo están levantados y ejecuta la Configuración del ReplicaSet
      
 
-## Antes de empezar, hablemos un poco de la configuración de MongoDB
+## MongoDB
+### Antes de empezar, hablemos un poco de la configuración de MongoDB
 
 Para la creación de un ReplicaSet de tres clusters en Mongo lo que se ha realizado es crear 4 contenedores de Docker (`mongoclient`, `mongo1`, `mongo2` y `mongo3`). 
 La diferencia del contenedor `mongoclient` respecto a los otros tres clusters es que este solo lo se encarga de inicializar el ReplicaSet y su configuración, después de esto es dado de baja.
@@ -119,6 +120,9 @@ Después de que se ejecute este proceso, ya tendremos inicializado y configurado
 
 Para conectarnos a este RS con el driver de MongoDB tendríamos que utilizar la siguiente uri: `mongodb://mongo1:27010,mongo2:27011,mongo3:27012`
 
+## Módulo
+
+
 
 ## Prerequisitos
 
@@ -137,5 +141,4 @@ Para conectarnos a este RS con el driver de MongoDB tendríamos que utilizar la 
         ...
         1d3609ce2ac9: Waiting
 
-    
 

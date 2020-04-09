@@ -28,7 +28,7 @@ if(replStatus && replStatus.ok === 1){
 } else {
     print(" ### Starting replication...");
     printjson(rs.initiate(rs_cluster));
-    sleep(5000);
+    sleep(3000);
     print(" ");
     print(" ### Replica Set status");
     printjson(rs.status());

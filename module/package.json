@@ -15,10 +15,11 @@
     "url": "https://github.com/JaimeRC"
   },
   "scripts": {
-    "test": "mocha ./test/index.js --timeout 15000 --exit"
+    "test": "mocha ./test/index.js --timeout 150000"
   },
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.24.0",
     "mongodb": "^3.3.2"
   },
   "devDependencies": {
