@@ -21,6 +21,7 @@ describe('Testing nx-mongodb', () => {
                 useUnifiedTopology: true
             }
         )
+
     })
 
     after(async () => {
@@ -34,12 +35,11 @@ describe('Testing nx-mongodb', () => {
 
     require('./address.test')
 
-    require('./mongoClient.test')
-
     require('./transaction.test')
 
-    require('./trigger.test')
-
     require('./actions.test')
+
+    require('./mongoClient.test')
+
 
 })

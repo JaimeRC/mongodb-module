@@ -1,23 +1,27 @@
-const {User} = require('../dao')
+const {User, Address} = require('../dao')
 const {expect} = require('chai')
 
 
 describe('User Test', () => {
 
-    before(async () => await User.injectDB(global.testClient))
+    before(async () =>{
+        await User.injectDB(global.testClient)
+        await Address.injectDB(global.testClient)
+    })
 
     let result
     let user = {
         name: 'Jaime',
         year: 1984,
-        major: 'Computer Science',
-        address: {
-            city: 'Malaga',
-            street: 'Calle Marmoles'
-        }
+        major: null,
+        address: ''
     }
 
     it('Create', async () => {
+        const {ops:address} = await Address.insertOne({name: 'Calle marmoles', address: {city:'Malaga'}})
+
+        user.address = address[0]._id
+
         let {ops} = await User.insertOne(user)
         result = ops[0]
 
@@ -32,7 +36,7 @@ describe('User Test', () => {
     })
 
     it('Update', async () => {
-        let test = await User.updateOne({name: user.name}, {$set: {'address.city': 'Cartama'}})
+        let test = await User.updateOne({name: user.name}, {$set: {major: 'Computer Science'}})
 
         expect(test.modifiedCount).to.equal(1)
     })

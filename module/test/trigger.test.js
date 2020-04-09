@@ -8,33 +8,31 @@ describe('Trigger Test', () => {
         result
     before(async () => {
         await Trigger.injectDB(global.testClient)
-
         let expireAt = new Date()
-        expireAt.setSeconds(t.getSeconds() + 10)
-
+        expireAt.setSeconds(expireAt.getSeconds() + 10)
         trigger = {expireAt}
     })
 
 
     it('Create', async () => {
-        let {ops} = await Trigger.insertOne(trigger)
+        let {ops} = await Trigger.insert(trigger)
 
         expect(ops[0]).not.to.equal(null)
     })
 
     it('Read', async () => {
-        let test = await Trigger.findOne({expireAt: trigger.expireAt})
+        let test = await Trigger.find({expireAt: trigger.expireAt})
 
         expect(test).not.to.equal(null)
         expect(test.expireAt).to.equal(trigger.expireAt)
     })
 
     it('Update', async () => {
-        let test1 = await Trigger.updateOne({expireAt: trigger.expireAt}, {$inc: {expireAt: 10}})
+        let test1 = await Trigger.update({expireAt: trigger.expireAt}, {$inc: {expireAt: 10}})
 
         expect(test1.modifiedCount).to.equal(1)
 
-        let test2 = await Trigger.findOne({expireAt: 15})
+        let test2 = await Trigger.find({expireAt: 15})
 
         expect(test2).not.to.equal(null)
     })

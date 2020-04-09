@@ -31,7 +31,7 @@ describe("MongoClient testing", async () => {
 
             // expect clientOptions to have the correct settings
             expect(clientOptions.replicaSet).to.equal(MONGO_RS_NAME)
-            expect(clientOptions.maxPoolSize).to.equal(100)
+           // expect(clientOptions.maxPoolSize).to.equal(100)
             expect(clientOptions.w).to.equal(1)
             expect(clientOptions.wtimeout).to.equal(2000)
             expect(clientOptions.readPreference.mode).to.equal('primaryPreferred')
@@ -69,15 +69,16 @@ describe("MongoClient testing", async () => {
                     retryWrites: true,                           // reintento de escritura (solo uno)
                     useNewUrlParser: true,
                     useUnifiedTopology: true
-                }
-            )
+                })
+
             // create a database object for the "test" database
             const testDB = testClient.db(MONGO_DATABASE)
 
             // make sure the "test" database has the correct collections
             const testCollections = await testDB.listCollections().toArray()
             const actualCollectionNames = testCollections.map(obj => obj.name)
-            const expectedCollectionNames = ["addresses", "users"]
+            const expectedCollectionNames = ["addresses", "users","actions"]
+
             expectedCollectionNames.map(collection => expect(actualCollectionNames).to.contains(collection))
         } catch (e) {
             expect(e).to.equal(null)

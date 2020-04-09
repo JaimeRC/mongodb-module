@@ -6,9 +6,8 @@ describe('Address Test', () => {
 
     before(async () => await Address.injectDB(global.testClient))
 
-    let address = {name: 'Calle marmoles', address: null}
+    let address = {name: 'Calle marmoles', address: {city:'Malaga'}}
     let result
-
 
     it('Create', async () => {
         let {ops} = await Address.insertOne(address)

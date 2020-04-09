@@ -1,10 +1,14 @@
-const {Action} = require('../dao')
+const {Action,Trigger} = require('../dao')
 const {expect} = require('chai')
 
 
 describe('Action Test', () => {
 
-    before(async () => await Action.injectDB(global.testClient))
+    before(async () => {
+        await Action.injectDB(global.testClient)
+        await Trigger.injectDB(global.testClient)
+
+    })
 
     let action = {
         action: 'test_application',
@@ -14,32 +18,37 @@ describe('Action Test', () => {
     }
 
     it('Create', async () => {
-        let {ops} = await Action.insertOne(action)
+        let {ops} = await Action.insert(action)
 
         expect(ops[0]).not.to.equal(null)
     })
 
     it('Read', async () => {
-        let test = await Action.findOne({action: action.action})
+        let test = await Action.find({action: action.action})
 
         expect(test).not.to.equal(null)
         expect(test.action).to.equal(action.action)
     })
 
     it('Update', async () => {
-        let test1 = await Action.updateOne({action: action.action}, {$inc: {nextLunch: 10}})
+        let test1 = await Action.update({action: action.action}, {$inc: {nextLunch: 10}})
 
         expect(test1.modifiedCount).to.equal(1)
 
-        let test2 = await Action.findOne({action: action.action})
+        let test2 = await Action.find({action: action.action})
 
-        expect(test2).to.equal(20)
+        expect(test2.nextLunch).to.equal(20)
     })
 
     it('Delete', async () => {
         let test = await Action.deleteOne({action: action.action})
 
         expect(test.deletedCount).to.equal(1)
+    })
+
+    describe('Trigger Test', () => {
+
+
     })
 
 })
