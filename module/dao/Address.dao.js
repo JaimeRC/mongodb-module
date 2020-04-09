@@ -1,7 +1,7 @@
 const {env: {MONGO_DATABASE}} = process
 const createIndexes = require('./utils/createIndexes')
 
-const indexes = [[{location: '2dsphere'}]]
+const indexes = [[{name:'geolocation',key:{location: '2dsphere'}}]]
 
 let addresses
 
