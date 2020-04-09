@@ -2,25 +2,22 @@ version: "3.7"
 
 services:
 
-  ### API WITH MONGODB DRIVER
-  api:
-    hostname: api
-    container_name: api
+  ### MODULE WITH MONGODB DRIVER
+  module:
+    hostname: module
+    container_name: module
     build:
       context: ./
-      dockerfile: api/Dockerfile
+      dockerfile: module/Dockerfile
     networks:
       - mongo_network
     ports:
       - 8080:8080
     volumes:
-      - ./api/:/src
+      - ./module/:/src
     env_file:
       - mongo/.env
     depends_on:
-      - mongo1
-      - mongo2
-      - mongo3
       - mongoclient
 
   ### REPLICA SET MONGODB
@@ -84,6 +81,7 @@ services:
     volumes:
       - ./mongo/deploy:/src
     entrypoint: ["bash","./src/setup.sh"]
+    restart: on-failure:10
 
 networks:
   mongo_network:
