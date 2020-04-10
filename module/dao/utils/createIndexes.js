@@ -9,9 +9,7 @@
 module.exports = async (collection, indexes, opts) => {
     try {
         for (let index of indexes) {
-            const result = await collection.createIndexes(index, opts)
-
-            console.log('CREATE INDEX -->', JSON.stringify(result))
+            await collection.createIndexes(index, opts)
         }
     } catch (e) {
         console.error('CREATE INDEX -->', e.message)

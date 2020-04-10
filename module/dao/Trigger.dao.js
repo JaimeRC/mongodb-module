@@ -1,4 +1,6 @@
+const TAG = '[DAO - TRIGGER] --> '
 const createIndexes = require('./utils/createIndexes')
+const Action = require('./Action.dao')
 const {env: {MONGO_DATABASE}} = process
 
 const indexes = [[{name: 'ttl', key: {expireAt: 1}}]]
@@ -20,27 +22,28 @@ module.exports = class Trigger {
                 }
             }*/
 
-            const changeStream = trigger.watch()
 
-            changeStream.on('change', (data) => {
-                try {
+            trigger.watch({ fullDocument: 'updateLookup' })
+                .on('change',async  (data) => {
+                    try {
 
-                    console.log('TRIGGER DAO --> ', data.operationType, data.ns, data.documentKey)
-                } catch (e) {
-                    console.error('TRIGGER COLLECTION --> Error --> ', e.message)
-                }
-            })
+                        console.log(TAG, data.operationType, ' --> ', data.documentKey)
+
+                    } catch (e) {
+                        console.error(TAG, ' Error --> ', e.message)
+                    }
+                })
 
             createIndexes(trigger, indexes, {expireAfterSeconds: 0})
         } catch (e) {
-            console.error(`Unable to establish connection in triggers collection: ${e}`)
+            console.error(TAG, `Unable to establish connection in triggers collection: ${e}`)
         }
     }
 
     static async insert(doc) {
         const documents = typeof doc === 'object' ? [doc] : doc
 
-        for(const document of documents){
+        for (const document of documents) {
             if (!document._id || !document.expireAt) throw ({message: '_id and/or expireAt are required.'})
         }
 

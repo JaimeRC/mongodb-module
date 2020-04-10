@@ -1,3 +1,4 @@
+const TAG = '[DAO - ACTION] --> '
 const Trigger = require('./Trigger.dao')
 const moment = require('moment')
 const createIndexes = require('./utils/createIndexes')
@@ -23,27 +24,28 @@ module.exports = class Action {
                         const {operationType, fullDocument, documentKey, updateDescription, ns} = data
 
                         const operations = {
-                            insert: async () => Action.insertSession(documentKey, fullDocument),
+                            insert:  () => Action.insertSession(documentKey, fullDocument),
                             update: () => Action.updateSession(documentKey, updateDescription),
                             delete: () => Action.deleteSession(documentKey),
-                            drop: () => console.log('drop -> ', ns)
+                            drop: () => console.log(TAG, 'drop -> ', ns)
                         }
 
                         operations[operationType]()
 
                     } catch (e) {
-                        console.error('ACTIONS COLLECTION --> Error --> ', e.message)
+                        console.error(TAG, ' --> Error --> ', e.message)
                     }
                 })
 
             createIndexes(action, indexes, {})
         } catch (e) {
-            console.error(`Unable to establish connection in actions collection: ${e}`)
+            console.error(TAG, `Unable to establish connection in actions collection: ${e}`)
         }
     }
 
     static async insert(doc) {
         const documents = typeof doc === 'object' ? [doc] : doc
+
         return await action.insertMany(documents)
     }
 
@@ -70,26 +72,19 @@ module.exports = class Action {
 
     static async insertSession(_id, fullDocument) {
         const {nextLunch} = fullDocument
-        await Trigger.insert({
-            _id,
-            expireAt: moment().add(nextLunch, 'seconds')
-        })
-        console.log('Insert -> ', fullDocument)
+        await Trigger.insert({_id, expireAt: moment().add(nextLunch, 'seconds')})
     }
 
     static async updateSession(_id, updateDescription) {
-        const {updateFields: {nextLunch}} = updateDescription
+        const {updatedFields: {nextLunch}} = updateDescription
         await Trigger.update(
             {_id},
             {$set: {nextLunch: moment().add(nextLunch, 'seconds')}},
             {upsert: true})
-
-        console.log('Update -> ', updateDescription)
     }
 
     static async deleteSession(_id) {
         await Trigger.deleteOne({_id})
-        console.log('Delete -> ', _id)
     }
 
 }
