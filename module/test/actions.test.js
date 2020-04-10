@@ -45,10 +45,4 @@ describe('Action Test', () => {
 
         expect(test.deletedCount).to.equal(1)
     })
-
-    describe('Trigger Test', () => {
-
-
-    })
-
 })

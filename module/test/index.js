@@ -21,11 +21,14 @@ describe('Testing nx-mongodb', () => {
                 useUnifiedTopology: true
             }
         )
-
+        await global.testClient.db(MONGO_DATABASE).dropDatabase()
     })
 
+    // Wait 1 seconds for earch test
+    beforeEach(done => setTimeout(done, 1000));
+
     after(async () => {
-        await global.testClient.db(MONGO_DATABASE).dropDatabase()
+        //await global.testClient.db(MONGO_DATABASE).dropDatabase()
         await global.testClient.close()
         delete global.testClient
     })
@@ -40,6 +43,5 @@ describe('Testing nx-mongodb', () => {
     require('./actions.test')
 
     require('./mongoClient.test')
-
 
 })
