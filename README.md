@@ -120,10 +120,6 @@ Después de que se ejecute este proceso, ya tendremos inicializado y configurado
 
 Para conectarnos a este RS con el driver de MongoDB tendríamos que utilizar la siguiente uri: `mongodb://mongo1:27010,mongo2:27011,mongo3:27012`
 
-## Módulo
-
-
-
 ## Prerequisitos
 
 - [Docker](https://docs.docker.com/install/) 
@@ -140,5 +136,56 @@ Para conectarnos a este RS con el driver de MongoDB tendríamos que utilizar la 
         5bed26d33875: Downloading [=======>                                           ]  4.135MB/26.69MB
         ...
         1d3609ce2ac9: Waiting
+        ...
+        Starting mongo1 ... done
+        Starting mongo3 ... done
+        Starting mongo2 ... done
+        Starting mongoclient ... done
+        Recreating module    ... done
+        Attaching to mongo1, mongo3, mongo2, mongoclient, module
+
+3. Despues de que se creen las instancia en los contenedores, nos introduciremos dento del contenedor de `module` para ejecutar los test:
+       
+       docker exec -it module sh 
+       npm run test
+       
+        Testing nx-mongodb
+           User Test
+             ✓ Create
+             ✓ Read
+             ✓ Update
+             ✓ Delete
+           Address Test
+             ✓ Create
+             ✓ Read
+             ✓ Update
+             ✓ Delete
+           Transactions Test
+             ✓ createUserWithAddress
+           Action Test
+             ✓ Create
+       [DAO - TRIGGER] -->  insert  -->  { _id: { _id: 5e92eec30b85930022b7b94d } }
+             ✓ Read
+             ✓ Update
+       [DAO - TRIGGER] -->  update  -->  { _id: { _id: 5e92eec30b85930022b7b94d } }
+             ✓ Delete
+           Trigger Test
+       [DAO - TRIGGER] -->  delete  -->  { _id: { _id: 5e92eec30b85930022b7b94d } }
+             ✓ Create
+       [DAO - TRIGGER] -->  insert  -->  { _id: 'test_1' }
+             ✓ Read
+             ✓ Update
+       [DAO - TRIGGER] -->  update  -->  { _id: 'test_1' }
+             ✓ Delete
+       [DAO - TRIGGER] -->  delete  -->  { _id: 'test_1' }
+       [DAO - TRIGGER] -->  insert  -->  { _id: 'test_2' }
+             ✓ Expire Document (8007ms)
+       [DAO - TRIGGER] -->  delete  -->  { _id: 'test_2' }
+           MongoClient testing
+             ✓ Client initialized with URI and options
+             ✓ Database handle created from MongoClient
+       
+       
+         20 passing (29s)
 
 
