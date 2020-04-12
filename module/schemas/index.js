@@ -1,3 +1,4 @@
+const TAG = '[JSON SCHEMA VALIDATION] --> '
 const userSchema = require('./user.schema')
 const addressSchema = require('./address.schema')
 const triggerSchema = require('./trigger.schema')
@@ -17,13 +18,16 @@ module.exports = class Schemas {
             if (!connection)
                 connection = conn
 
-            await connection.db(process.env.DB_TEST).runCommand(userSchema)
-            await connection.db(process.env.DB_TEST).runCommand(addressSchema)
-            await connection.db(process.env.DB_TEST).runCommand(triggerSchema)
-            await connection.db(process.env.DB_TEST).runCommand(actionSchema)
+            const db = await connection.db(process.env.MONGO_DATABASE)
 
+            await db.createCollection('users', userSchema)
+            await db.createCollection('addresses', addressSchema)
+            await db.createCollection('triggers', triggerSchema)
+            await db.createCollection('actions', actionSchema)
+
+            console.log(TAG, 'is active.')
         } catch (e) {
-            console.error(`Unable to establish connection with Schemas: ${e.message}`)
+            console.error(TAG, `Unable to establish connection with Schemas: ${e.message}`)
         }
     }
 }

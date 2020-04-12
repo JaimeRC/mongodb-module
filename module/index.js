@@ -19,7 +19,6 @@ const options = {
     useUnifiedTopology: true
 }
 
-
 MongoClient.connect(MONGO_URI, options)
     .catch(err => {
         console.error(err.stack)

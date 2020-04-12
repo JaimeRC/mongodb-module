@@ -9,4 +9,4 @@ WORKDIR /src
 COPY . .
 RUN npm install
 
-CMD [ "npm", "run", "test" ]
+CMD [ "node", "index" ]
