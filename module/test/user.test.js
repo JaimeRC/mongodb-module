@@ -4,11 +4,6 @@ const {expect} = require('chai')
 
 describe('User Test', () => {
 
-    before(async () =>{
-        await User.injectDB(global.testClient)
-        await Address.injectDB(global.testClient)
-    })
-
     let result
     let user = {
         name: 'Jaime',

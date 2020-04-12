@@ -4,12 +4,6 @@ const {expect} = require('chai')
 
 describe('Action Test', () => {
 
-    before(async () => {
-        await Action.injectDB(global.testClient)
-        await Trigger.injectDB(global.testClient)
-
-    })
-
     let action = {
         action: 'test_application',
         nextLunch: 10,

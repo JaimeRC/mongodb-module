@@ -4,8 +4,6 @@ const {expect} = require('chai')
 
 describe('Address Test', () => {
 
-    before(async () => await Address.injectDB(global.testClient))
-
     let address = {name: 'Calle marmoles', address: {city:'Malaga'}}
     let result
 

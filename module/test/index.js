@@ -1,6 +1,8 @@
 const {MongoClient} = require('mongodb')
-const {env: {MONGO_RS_NAME, MONGO_URI,MONGO_DATABASE}} = process
+const {env: {MONGO_RS_NAME, MONGO_URI, MONGO_DATABASE}} = process
+const collections = require('../dao')
 
+console.log(process.env)
 describe('Testing nx-mongodb', () => {
 
     before(async () => {
@@ -22,13 +24,15 @@ describe('Testing nx-mongodb', () => {
             }
         )
         await global.testClient.db(MONGO_DATABASE).dropDatabase()
+
+        await Object.keys(collections)
+            .forEach(async collection => await collections[collection].injectDB(global.testClient))
     })
 
     // Wait 1 seconds for earch test
     beforeEach(done => setTimeout(done, 1000));
 
     after(async () => {
-        //await global.testClient.db(MONGO_DATABASE).dropDatabase()
         await global.testClient.close()
         delete global.testClient
     })
@@ -41,6 +45,8 @@ describe('Testing nx-mongodb', () => {
     require('./transaction.test')
 
     require('./actions.test')
+
+    require('./trigger.test')
 
     require('./mongoClient.test')
 
