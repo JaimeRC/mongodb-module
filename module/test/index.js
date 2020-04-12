@@ -2,7 +2,6 @@ const {MongoClient} = require('mongodb')
 const {env: {MONGO_RS_NAME, MONGO_URI, MONGO_DATABASE}} = process
 const collections = require('../dao')
 
-console.log(process.env)
 describe('Testing nx-mongodb', () => {
 
     before(async () => {

@@ -15,7 +15,7 @@
     "url": "https://github.com/JaimeRC"
   },
   "scripts": {
-    "test": "mocha ./test/index.js --timeout 150000"
+    "test": "mocha ./test/index.js --timeout 60000 --exit"
   },
   "license": "ISC",
   "dependencies": {
