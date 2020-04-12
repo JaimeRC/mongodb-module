@@ -4,7 +4,7 @@ const moment = require('moment')
 const createIndexes = require('./utils/createIndexes')
 const {env: {MONGO_DATABASE}} = process
 
-const indexes = [[{name: '_id', key: {_id: 1}}]]
+const indexes = [{name: '_id', key: {_id: 1}}]
 
 let action
 
@@ -37,7 +37,7 @@ module.exports = class Action {
                     }
                 })
 
-            createIndexes(action, indexes, {})
+            createIndexes(action, indexes)
         } catch (e) {
             console.error(TAG, `Unable to establish connection in actions collection: ${e}`)
         }
@@ -86,5 +86,4 @@ module.exports = class Action {
     static async deleteSession(_id) {
         await Trigger.deleteOne({_id})
     }
-
 }

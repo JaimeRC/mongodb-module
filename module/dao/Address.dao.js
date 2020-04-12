@@ -1,7 +1,7 @@
 const {env: {MONGO_DATABASE}} = process
 const createIndexes = require('./utils/createIndexes')
 
-const indexes = [[{name:'geolocation',key:{location: '2dsphere'}}]]
+const indexes = [{name:'geolocation',key:{location: '2dsphere'}}]
 
 let addresses
 
@@ -13,7 +13,7 @@ module.exports = class Address {
         try {
             addresses = await conn.db(MONGO_DATABASE).collection("addresses")
 
-            createIndexes(addresses, indexes, {})
+            createIndexes(addresses, indexes)
         } catch (e) {
             console.error(`Unable to establish connection in addresses collection: ${e}`)
         }

@@ -6,10 +6,10 @@
  * @param opts              Opciones para aplicar en los indices
  */
 
-module.exports = async (collection, indexes, opts) => {
+module.exports = async (collection, indexes) => {
     try {
-        for (let index of indexes) {
-            await collection.createIndexes(index, opts)
+        for (let {name, key, opts} of indexes) {
+            await collection.createIndex(key, {name, ...opts})
         }
     } catch (e) {
         console.error('CREATE INDEX -->', e.message)

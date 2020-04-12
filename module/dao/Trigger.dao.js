@@ -3,7 +3,7 @@ const createIndexes = require('./utils/createIndexes')
 const Action = require('./Action.dao')
 const {env: {MONGO_DATABASE}} = process
 
-const indexes = [[{name: 'ttl', key: {expireAt: 1}}]]
+const indexes = [{name: 'ttl', key: {expireAt: 1}, opts: {expireAfterSeconds: 0}}]
 
 let trigger
 
@@ -22,11 +22,9 @@ module.exports = class Trigger {
                 }
             }*/
 
-
-            trigger.watch({ fullDocument: 'updateLookup' })
-                .on('change',async  (data) => {
+            trigger.watch({fullDocument: 'updateLookup'})
+                .on('change', async (data) => {
                     try {
-
                         console.log(TAG, data.operationType, ' --> ', data.documentKey)
 
                     } catch (e) {
@@ -34,7 +32,7 @@ module.exports = class Trigger {
                     }
                 })
 
-            createIndexes(trigger, indexes, {expireAfterSeconds: 0})
+            createIndexes(trigger, indexes)
         } catch (e) {
             console.error(TAG, `Unable to establish connection in triggers collection: ${e}`)
         }
@@ -51,12 +49,7 @@ module.exports = class Trigger {
     }
 
     static async find(filter, project = {}) {
-        const document = await trigger.find(filter, project)
-
-        if (document && document.length === 1) {
-            return document[0]
-        }
-        return document
+        return await trigger.find(filter, project).toArray()
     }
 
     static async update(filter, update, options = {}) {
@@ -70,5 +63,4 @@ module.exports = class Trigger {
     static async deleteMany(filter) {
         return await trigger.deleteMany(filter)
     }
-
 }

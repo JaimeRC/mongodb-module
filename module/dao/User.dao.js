@@ -1,7 +1,7 @@
 const createIndexes = require('./utils/createIndexes')
 const {env: {MONGO_DATABASE}} = process
 
-const indexes = [[{name: 'name', key: {name: 1}}]]
+const indexes = [{name: 'name', key: {name: 1}}]
 
 let users
 

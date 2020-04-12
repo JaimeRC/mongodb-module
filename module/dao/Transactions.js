@@ -25,10 +25,9 @@ module.exports = class Transactions {
 
             const newUser = await db.collection("users").insertOne(user, {session})
 
-            await session.commitTransaction();
-
             newUser.address = address
-            await session.endSession();
+
+            await session.commitTransaction();
 
             return newUser;
 
@@ -36,7 +35,7 @@ module.exports = class Transactions {
             // If an error occurred, abort the whole transaction and
             // undo any changes that might have happened
             await session.abortTransaction();
-            throw error; // Rethrow so calling function sees error
+            throw error // Rethrow so calling function sees error
         } finally {
             session.endSession();
         }
