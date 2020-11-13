@@ -2,7 +2,16 @@ const {env: {MONGO_DATABASE}} = process
 
 let session, db
 
+/**
+ * Clase para gestionar las Transacciones
+ * @type {Transactions}
+ */
 module.exports = class Transactions {
+
+    /**
+     * Crea la conexion a la DB y genera la session
+     * @param {MongoClient} conn      Conexion de Mongodb
+     */
     static async injectDB(conn) {
         if (session && db) return
 
@@ -15,6 +24,12 @@ module.exports = class Transactions {
     }
 
     // The actual transfer logic
+    /**
+     * Transaccion que genera un usuario y su direccion.
+     * @param {User} user         Datos del usuario
+     * @param {Address} address   Datos de la direccion
+     * @returns {Promise<User>}   Datos del usuario almacenado en la DB
+     */
     static async createUserWithAddress(user, address) {
         try {
             session.startTransaction()
@@ -32,10 +47,10 @@ module.exports = class Transactions {
             return newUser;
 
         } catch (error) {
-            // If an error occurred, abort the whole transaction and
-            // undo any changes that might have happened
+            // Si ocurre un error, aborta la transaccion y
+            // se deshacer los cambios que hayan podido realizarse.
             await session.abortTransaction();
-            throw error // Rethrow so calling function sees error
+            throw error // Relanzamos el error
         } finally {
             session.endSession();
         }

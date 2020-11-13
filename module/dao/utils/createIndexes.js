@@ -1,11 +1,8 @@
 /**
  * Crea indices si no existen en la Coleccion
- *
- * @param collection        Coneccion a la collecion.
- * @param indexes           Indices a aplicar.
- * @param opts              Opciones para aplicar en los indices
+ * @param {Collection} collection          Coneccion a la collecion.
+ * @param {Array<object>} indexes          Indices a aplicar.
  */
-
 module.exports = async (collection, indexes) => {
     try {
         for (let {name, key, opts} of indexes) {
