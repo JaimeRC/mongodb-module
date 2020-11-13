@@ -35,33 +35,22 @@ describe('Trigger Test', () => {
         expect(test.deletedCount).to.equal(1)
     })
 
-    it('Expire Document', async () => {
+    it('Expire Document', async function (done) {
 
         let expireAt = new Date()
-        expireAt.setSeconds(expireAt.getSeconds() + 5)
+        expireAt.setSeconds(expireAt.getSeconds() + 3)
 
-        let triggerExpire = {_id: 'test_2', expireAt}
+        let triggerExpire = {_id: 'test_3', expireAt}
 
         let {ops} = await Trigger.insert(triggerExpire)
 
         expect(ops[0]).not.to.equal(null)
 
-        const timeout = (fn, delay) => {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    try {
-                        fn();
-                        resolve();
-                    } catch (err) {
-                        reject(err);
-                    }
-                }, delay);
-            });
-        }
-
-        return timeout(async () => {
+        setTimeout(async function(){
             const test = await Trigger.find({_id: triggerExpire._id})
             expect(test.length).to.equal(0)
-        }, 8000);
+            done()
+        },10000)
+
     })
 })

@@ -3,18 +3,33 @@ const {env: {MONGO_RS_NAME, MONGO_URI}} = process
 const collections = require('./dao')
 const schemas = require('./schemas')
 
-
+/**
+ * Opciones para el pool de conexiones
+ * @typedef {Object} options
+ * @property {string} replicaSet            Nombre del replica set
+ * @property {number} maxPoolSize           Numero de conexiones para el pool creado
+ * @property {number} w                     Confirmación de inserción en un solo nodo
+ * @property {number} wtimeout              Tiempo máximo para la insercion
+ * @property {string} readPreference        Preferencia del nodo de lectura
+ * @property {boolean} autoReconnect        Reconectarse a la BD
+ * @property {number} reconnectTries        Intentos de reconeccion
+ * @property {number} reconnectInterval     Intervalo de reconeccion
+ * @property {number} connectTimeoutMS
+ * @property {boolean} retryWrites          Reintento de escritura (solo uno)
+ * @property {boolean} useNewUrlParser
+ * @property {boolean} useUnifiedTopology
+ */
 const options = {
-    replicaSet: MONGO_RS_NAME,                   //nombre del replica set
-    //maxPoolSize: 100,                          //numero de conexiones para el pool creado
-    w: 1,                                        //confirmación de inserción en un solo nodo
-    wtimeout: 2000,                              //tiempo máximo para la insercion
-    readPreference: 'primaryPreferred',          //preferencia del nodo de lectura
-    autoReconnect: true,                         //reconectarse a la BD
-    reconnectTries: 30,                          //Intentos de reconeccion
-    reconnectInterval: 1000,                     //Intervalo de reconeccion
+    replicaSet: MONGO_RS_NAME,
+    //maxPoolSize: 100,
+    w: 1,
+    wtimeout: 2000,
+    readPreference: 'primaryPreferred',
+    autoReconnect: true,
+    reconnectTries: 30,
+    reconnectInterval: 1000,
     connectTimeoutMS: 200,
-    retryWrites: true,                           // reintento de escritura (solo uno)
+    retryWrites: true,
     useNewUrlParser: true,
     useUnifiedTopology: true
 }
